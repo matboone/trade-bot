@@ -32,7 +32,7 @@ jobs:
     - name: Run smoke tests
       env:
         CI: "true"     # tells core.py to skip live login
-      run: pytest -q
+      run: pytest tests -q
 
     # ---------- Node ----------
     - name: Set up Node
