@@ -1,0 +1,30 @@
+{
+  "name": "trade-bot",
+  "version": "1.0.0",
+  "description": "Python MACD + Bollinger trading bot with Node.js wrapper\r > Initial scaffold – Python bot coming soon.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bot": "node index.js",
+    "bot:dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matboone/trade-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/matboone/trade-bot/issues"
+  },
+  "homepage": "https://github.com/matboone/trade-bot#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "execa": "^9.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
