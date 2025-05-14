@@ -4,7 +4,7 @@
 ![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-yellow)
 ![Node 20 LTS](https://img.shields.io/badge/Node-20.x-brightgreen)
 
-> **Lightning‑fast MACD + Bollinger Bands back‑tester**  
+> **MACD + Bollinger Bands back‑tester**  
 > Node.js orchestrator • Python strategy engine • Zero‑to‑trades in 60 sec
 
 ---
