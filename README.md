@@ -45,7 +45,6 @@ npm run bot -- --symbol=SOFI --interval=m30
 
 ## Architecture
 
-### Architecture
 ```mermaid
 graph TD
   subgraph Node.js
