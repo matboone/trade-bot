@@ -48,10 +48,10 @@ npm run bot -- --symbol=SOFI --interval=m30
 ```mermaid
 graph TD
   subgraph Node.js
-    A[Node wrapper<br/>index.js]
+    A[Node wrapper\nindex.js]
   end
   subgraph Python
-    B[bot.core<br/>(MACD + BB)]
+    B[bot.core\n(MACD + BB)]
     C[pandas]
   end
   D[Webull API]
