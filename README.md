@@ -39,3 +39,28 @@ cp .env.example .env             # add your Webull creds
 
 # 7‑day back‑test on 30‑min candles
 npm run bot -- --symbol=SOFI --interval=m30
+```
+
+---
+
+## Architecture
+
+```mermaid
+graph TD
+  subgraph Node.js
+    A[Node wrapper<br/>index.js]
+  end
+  subgraph Python
+    B[bot.core<br/>(MACD + BB)]
+    C[pandas]
+  end
+  D[Webull API]
+  A -->|spawn| B
+  B --> C --> B
+  B -->|HTTP| D
+```
+
+---
+
+## Disclaimer
+This project is for educational purposes only. It does not constitute financial advice, and no live orders are executed by default. Use responsibly and at your own risk.
