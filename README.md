@@ -1,4 +1,4 @@
-# Trade‑Bot ⚡️📈  
+# Trade‑Bot
 [![CI](https://github.com/matboone/trade-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/matboone/trade-bot/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 ![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-yellow)
@@ -9,7 +9,7 @@
 
 ---
 
-## ✨ Key features
+## Key features
 | What | Why it matters |
 |------|----------------|
 | **End‑to‑end stack** | Node wrapper spawns Python, mimicking micro‑service orchestration. |
@@ -20,7 +20,7 @@
 
 ---
 
-## 🚀 Quick start
+## Quick start
 
 ```bash
 # Clone
