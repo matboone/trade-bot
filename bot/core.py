@@ -5,11 +5,14 @@ import pandas as pd
 from webull import webull
 
 # --- Webull login via environment variables ---
-wb = webull()
-wb.login(
-    os.getenv("WEBULL_USER"),
-    os.getenv("WEBULL_PASS")
-)
+import os
+# ... existing imports ...
+
+if os.getenv("CI") == "true":
+    wb = None  # skip live login in CI
+else:
+    wb = webull()
+    wb.login(os.getenv("WEBULL_USER"), os.getenv("WEBULL_PASS"))
 
 # Fetch historical data with synthetic timestamps if needed
 def fetch_historical_data(symbol, interval='m5', start_date=None, end_date=None):
@@ -156,5 +159,9 @@ if __name__ == "__main__":
     for log in trade_log:
         print(log)
     print(f"Final balance: ${final_balance:.2f}")
-    print(wb.get_account())
-    wb.logout()
+    if wb:
+        try:
+            print(wb.get_account())
+        except Exception:
+            pass
+        wb.logout()
