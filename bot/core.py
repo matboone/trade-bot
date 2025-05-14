@@ -131,12 +131,23 @@ def backtest(symbol, interval='m5', start_date=None, end_date=None, initial_bala
     return final_balance, trade_log
 
 if __name__ == "__main__":
-    start_date = datetime.now() - timedelta(days=7)
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--symbol",    default="SOFI")
+    parser.add_argument("--interval",  default="m30",
+                        choices=["m1", "m5", "m15", "m30", "h1", "d1"])
+    parser.add_argument("--days", type=int, default=7,
+                        help="How many days of history to back‑test")
+
+    args = parser.parse_args()
+
+    start_date = datetime.now() - timedelta(days=args.days)
     end_date   = datetime.now()
 
     final_balance, trade_log = backtest(
-        "SOFI",
-        interval="m30",
+        args.symbol,
+        interval=args.interval,
         start_date=start_date,
         end_date=end_date,
         initial_balance=100
