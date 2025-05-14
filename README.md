@@ -45,19 +45,19 @@ npm run bot -- --symbol=SOFI --interval=m30
 
 ## Architecture
 
+### Architecture
 ```mermaid
 graph TD
   subgraph Node.js
-    A[Node wrapper\nindex.js]
+    A["Wrapper (index.js)"]
   end
   subgraph Python
-    B[bot.core\n(MACD + BB)]
-    C[pandas]
+    B["Engine (bot.core)"]
+    C["Indicators (MACD + BB)"]
   end
-  D[Webull API]
-  A -->|spawn| B
-  B --> C --> B
-  B -->|HTTP| D
+  A --> B
+  B --> C
+  B --> D["Webull API"]
 ```
 
 ---
