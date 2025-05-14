@@ -29,9 +29,10 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
 
-    - name: Run smoke tests
+    - name: Run pytest smoke suite
       env:
         CI: "true"     # tells core.py to skip live login
+        PYTHONPATH: ${{ github.workspace }}
       run: pytest tests -q
 
     # ---------- Node ----------
