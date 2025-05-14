@@ -130,18 +130,6 @@ def backtest(symbol, interval='m5', start_date=None, end_date=None, initial_bala
     trade_log.append(f"Final portfolio value: ${final_balance:.2f}")
     return final_balance, trade_log
 
-# Backtest last week
-start_date = datetime.now() - timedelta(days=7)  # Start 7 days ago
-end_date = datetime.now()  # End today
-
-final_balance, trade_log = backtest(
-    'SOFI',
-    interval='m30',
-    start_date=start_date,
-    end_date=end_date,
-    initial_balance=100
-)
-
 if __name__ == "__main__":
     start_date = datetime.now() - timedelta(days=7)
     end_date   = datetime.now()
