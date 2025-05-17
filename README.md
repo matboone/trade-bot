@@ -4,112 +4,134 @@
 ![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-yellow)
 ![Node 20 LTS](https://img.shields.io/badge/Node-20.x-brightgreen)
 
-> **MACD + Bollinger Bands back‑tester**  
-> Node.js orchestrator • Python strategy engine • Zero‑to‑trades in 60 sec
-
----
-
-## Key features
-| What | Why it matters |
-|------|----------------|
-| **End‑to‑end stack** | Node wrapper spawns Python, mimicking micro‑service orchestration. |
-| **Config in one line** | `npm run bot -- --symbol=SOFI --interval=m30` (m1 / m5 / m15 / m30 / h1 / d1). |
-| **Test‑first mindset** | CI runs an offline smoke test on every push; green badge proves it builds. |
-| **.env‑driven credentials** | No secrets in code; works locally and in cloud runners. |
-| **Ready for Docker & cron** | One command away from 24/7 scheduled runs. |
+A fast back-tester for MACD + Bollinger Band strategies, driven by a Node.js wrapper + Python engine, exposed via CLI, REST API, and a React dashboard.
 
 ---
 
 ## Prerequisites
 
-Before you begin, make sure you have the following:
+- **Git**: `git --version` (install from https://git-scm.com)
+- **Python 3.12+**: `python3 --version` (install from https://python.org)
+- **Node.js 20 LTS + npm**: `node --version && npm --version` (install from https://nodejs.org)
+- **Webull account**: Sign up at https://www.webull.com and note your email & password.
 
-1. **Git**  
-   ```bash
-   git --version
-   # If not installed:
-   # Mac:    brew install git
-   # Windows: Download and run https://git-scm.com/download/win
-   # Linux:   sudo apt install git
-   ```
-2. **Python 3.12+**
-   ```bash
-   python3 --version
-   # If not installed:
-   # Mac:    brew install python@3.12
-   # Windows: Download from https://python.org/downloads
-   # Linux:   sudo apt install python3.12 python3.12-venv
-   ```
-3. **Node.js 20 LTS + npm**
-   ```bash
-   node --version
-   npm --version
-   # If not installed:
-   # Mac:    brew install node@20
-   # Windows: Download from https://nodejs.org/
-   # Linux:   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-   #          sudo apt install nodejs
-   ```
-4. **WeBull Account**
-   1. Go to https://www.webull.com and click Sign Up.
+---
 
-   2. Register with your email and create a password.
-
-   3. Verify your email address.
-
-   4. (Optional) Enable two-factor authentication for added security.
-
-   You will use these credentials in a local .env file so the bot can log in.
-
-   ---
-   
-## Quick start
+## Quick Start (CLI)
 
 ```bash
-# 1. Clone repository
 git clone https://github.com/matboone/trade-bot.git
 cd trade-bot
 
-# 2. Copy and edit credentials
+# 1. Credentials
 cp .env.example .env
-# ─ open .env in your editor and fill in:
-#   WEBULL_USER=<your email>
-#   WEBULL_PASS=<your password>
+# Edit `.env`, set WEBULL_USER and WEBULL_PASS
 
-# 3. Set up Python environment
+# 2. Python environment
 python3 -m venv .venv
-# ─ on Windows:
-.\.venv\Scripts\activate
-# ─ on macOS/Linux:
+# Windows:
+. .\.venv\Scripts\Activate
+# macOS/Linux:
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# 4. Install Node dependencies
+# 3. Node dependencies
 npm ci
 
-# 5. Run a 7-day back-test on 30-min candles for SOFI
+# 4. Run back-test (7 days, 30m interval)
 npm run bot -- --symbol=SOFI --interval=m30
 ```
 
 ---
 
-## Architecture
+## REST API
 
-```mermaid
-graph TD
-  subgraph Node.js
-    A["Wrapper (index.js)"]
-  end
-  subgraph Python
-    B["Engine (bot.core)"]
-    C["Indicators (MACD + BB)"]
-  end
-  A --> B
-  B --> C
-  B --> D["Webull API"]
+Start the API server on port 3000:
+
+```bash
+# If venv is active:
+npm run api
+# Or explicitly activate venv then:
+. .venv/bin/activate && npm run api
+```
+
+Test with curl:
+
+```bash
+curl "http://localhost:3000/backtest?symbol=AAPL&interval=h1"
+```
+
+By default the API returns plain-text logs. To enable JSON output:
+
+1. In `bot/core.py`, add a `--json` flag and `print(json.dumps(...))`.
+2. In `api.js`, append `--json` to the execa arguments and `res.json(JSON.parse(stdout))`.
+
+---
+
+## React Dashboard
+
+A simple frontend to drive the API and display results.
+
+1. Create or navigate to `dashboard/`:
+   ```bash
+   cd dashboard
+   npm install
+   # Ensure proxy in package.json:
+   # "proxy": "http://localhost:3000",
+   npm start
+   ```
+2. In your browser visit `http://localhost:3001` (or 3000 if you set proxy ports).
+3. Enter a ticker & interval, then click **Run Backtest**.
+
+The dashboard sends `/backtest?symbol=...&interval=...` to your API and streams the output.
+
+---
+
+## Docker & Compose
+
+Build and run with Docker Compose:
+
+```bash
+docker compose build
+# Ensure .env exists in root with credentials
+docker compose up
+```
+
+This spins up two services:
+
+- **trade-bot**: runs the back-test once (or scheduled via cron)
+- **api**: exposes `/backtest` on port 3000
+
+Disable local mounts in `docker-compose.yml` for production.
+
+---
+
+## Tests & CI
+
+- **Smoke test** (offline logic): `pytest -q`
+- **CI** (GitHub Actions): runs Python + Node smoke tests via `npm ci & pytest`.
+
+Run locally:
+
+```bash
+pytest -q
+npm test # if you add JS tests
 ```
 
 ---
 
-## Disclaimer
-This project is for educational purposes only. It does not constitute financial advice, and no live orders are executed by default. Use responsibly and at your own risk.
+## Roadmap
+
+- [x] CLI wrapper & Python engine
+- [x] REST API
+- [x] React dashboard
+- [x] Docker image & Compose
+- [ ] Scheduled jobs (cron or node-cron)
+- [ ] Authentication & rate limiting
+- [ ] Equity-curve charts in dashboard
+
+---
+
+## License
+
+Released under the [MIT License](/LICENSE).
