@@ -1,8 +1,11 @@
 import 'dotenv/config';           // loads WEBULL_USER/PASS from .env
 import express from 'express';
 import { execa } from 'execa';
+import cors from 'cors';
+
 
 const app = express();
+app.use(cors({ origin: '*' }));
 const PORT = process.env.PORT || 3000;
 
 app.get('/backtest', async (req, res) => {
