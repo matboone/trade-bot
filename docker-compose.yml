@@ -1,14 +1,14 @@
-services:
-  trade-bot:
-    build: .
-    container_name: trade-bot
-    env_file:
-      - .env           # loads your WEBULL_USER / WEBULL_PASS
-    volumes:
-      - .:/app         # mounts code so you can iterate without rebuilding
-    environment:
-      SYMBOL: SOFI
-      INTERVAL: m30
+ services:
+   trade-bot:
+     build: .
+     container_name: trade-bot
+     env_file:
+       - .env
+-    volumes:
+-      - .:/app
+     environment:
+       SYMBOL: SOFI
+       INTERVAL: m30
     # command: 
     #   override if you want a different default
     #   - sh
