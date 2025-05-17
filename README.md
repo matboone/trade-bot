@@ -20,24 +20,74 @@
 
 ---
 
+## Prerequisites
+
+Before you begin, make sure you have the following:
+
+1. **Git**  
+   ```bash
+   git --version
+   # If not installed:
+   # Mac:    brew install git
+   # Windows: Download and run https://git-scm.com/download/win
+   # Linux:   sudo apt install git
+   ```
+2. **Python 3.12+**
+   ```bash
+   python3 --version
+   # If not installed:
+   # Mac:    brew install python@3.12
+   # Windows: Download from https://python.org/downloads
+   # Linux:   sudo apt install python3.12 python3.12-venv
+   ```
+3. **Node.js 20 LTS + npm**
+   ```bash
+   node --version
+   npm --version
+   # If not installed:
+   # Mac:    brew install node@20
+   # Windows: Download from https://nodejs.org/
+   # Linux:   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+   #          sudo apt install nodejs
+   ```
+4. **WeBull Account**
+   1. Go to https://www.webull.com and click Sign Up.
+
+   2. Register with your email and create a password.
+
+   3. Verify your email address.
+
+   4. (Optional) Enable two-factor authentication for added security.
+
+   You will use these credentials in a local .env file so the bot can log in.
+
+   ---
+   
 ## Quick start
 
 ```bash
-# Clone
-git clone https://github.com/matboone/trade-bot.git && cd trade-bot
+# 1. Clone repository
+git clone https://github.com/matboone/trade-bot.git
+cd trade-bot
 
-# Python deps (virtual‑env recommended)
-python -m venv .venv             # or conda/mamba
-.\.venv\Scripts\activate         # Windows
+# 2. Copy and edit credentials
+cp .env.example .env
+# ─ open .env in your editor and fill in:
+#   WEBULL_USER=<your email>
+#   WEBULL_PASS=<your password>
+
+# 3. Set up Python environment
+python3 -m venv .venv
+# ─ on Windows:
+.\.venv\Scripts\activate
+# ─ on macOS/Linux:
+source .venv/bin/activate
 pip install -r requirements.txt
 
-# Node deps
+# 4. Install Node dependencies
 npm ci
 
-# Secrets
-cp .env.example .env             # add your Webull creds
-
-# 7‑day back‑test on 30‑min candles
+# 5. Run a 7-day back-test on 30-min candles for SOFI
 npm run bot -- --symbol=SOFI --interval=m30
 ```
 
