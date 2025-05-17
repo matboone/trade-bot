@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  trade-bot:
+    build: .
+    container_name: trade-bot
+    env_file:
+      - .env           # loads your WEBULL_USER / WEBULL_PASS
+    volumes:
+      - .:/app         # mounts code so you can iterate without rebuilding
+    environment:
+      SYMBOL: SOFI
+      INTERVAL: m30
+    # command: 
+    #   override if you want a different default
+    #   - sh
+    #   - -c
+    #   - . .venv/bin/activate && npm run bot -- --symbol=${SYMBOL} --interval=${INTERVAL}
