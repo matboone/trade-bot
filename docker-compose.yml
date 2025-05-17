@@ -1,14 +1,18 @@
- services:
-   trade-bot:
-     build: .
-     container_name: trade-bot
-     env_file:
-       - .env
--    volumes:
--      - .:/app
-     environment:
-       SYMBOL: SOFI
-       INTERVAL: m30
+services:
+  trade-bot:
+    build: .
+    container_name: trade-bot
+    env_file:
+      - .env
+    volumes:
+      - .:/app:delegated      # your code
+      - tradebot_venv:/app/.venv  # separate venv
+    environment:
+      SYMBOL: SOFI
+      INTERVAL: m30
+
+volumes:
+  tradebot_venv:
     # command: 
     #   override if you want a different default
     #   - sh
